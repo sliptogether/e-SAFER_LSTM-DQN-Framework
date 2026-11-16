@@ -1,0 +1,11 @@
+# Versions used for local validation on Python 3.12.14 / Windows / CPU.
+# This records the direct dependency environment, not a transitive lockfile.
+numpy==2.3.5
+pandas==3.0.1
+openpyxl==3.1.5
+PyYAML==6.0.3
+torch==2.13.0
+matplotlib==3.11.1
+gymnasium==1.3.0
+scipy==1.18.1
+pytest==9.1.1

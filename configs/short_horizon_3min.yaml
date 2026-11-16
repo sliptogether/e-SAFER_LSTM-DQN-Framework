@@ -1,0 +1,142 @@
+# Experimental configuration; supply authorized local records in data/raw.
+project:
+  seed: 42
+  device: cpu
+paths:
+  raw_dir: data/raw
+  output_dir: outputs_3min
+data:
+  features:
+  - Na
+  - K
+  - Ca
+  - TEMP
+  - FR
+  sheet_map:
+    Day1:
+      TEMP: TEMP-10
+      Na: Na
+      K: K
+      Ca: Ca
+      FR: FR
+      HR: HR-10
+    Day2:
+      TEMP: TEMP
+      Na: Na
+      K: K
+      Ca: Ca
+      FR: FR
+      HR: HR
+    Day3:
+      TEMP: TEMP
+      Na: Na
+      K: K
+      Ca: Ca
+      FR: FR
+      HR: HR
+    Day4:
+      TEMP: TEMP10
+      Na: Na10
+      K: K10
+      Ca: Ca10
+      FR: FR
+      HR: HR
+  minute_start: 6
+  minute_end: 55
+  prediction_start_min: 10
+  input_length_min: 5
+  forecast_horizon_min: 3
+  forecast_origins:
+  - 10
+  - 20
+  - 30
+  - 40
+  - 50
+model:
+  candidate_modes:
+  - rel
+  - abs_rel
+  candidate_hidden:
+  - 8
+  - 16
+  candidate_summary_loss_weight:
+  - 0.0
+  - 0.1
+  - 0.5
+  candidate_use_all_features:
+  - false
+  - true
+  candidate_include_hr:
+  - false
+  - true
+  candidate_include_time:
+  - true
+  candidate_trend_skip:
+  - false
+  - true
+  candidate_persistence_blend:
+  - 0.0
+  - 0.25
+  - 0.5
+  - 0.75
+  - 1.0
+  epochs: 60
+  learning_rate: 0.005
+  weight_decay: 0.0001
+  ensemble_seeds:
+  - 101
+  - 202
+  - 303
+  - 404
+  - 505
+  early_stopping:
+    enabled: true
+    validation_day: 3
+    monitor: trajectory_loss
+    patience: 10
+    min_delta: 0.0001
+    min_epochs: 10
+selection:
+  trajectory_r2_weight: 1.0
+  trend_accuracy_weight: 0.1
+  summary_nrmse_weight: 0.05
+  stable_threshold_multiplier: 2.0
+figures:
+  prediction_targets:
+  - Na
+  - K
+  - Ca
+  - FR
+  prediction_origin: 20
+rl_state:
+  include_observed_cumulative_slope: true
+rl_demo:
+  episodes: 300
+  gamma: 0.95
+  lr: 0.001
+  batch_size: 32
+  replay_size: 5000
+  target_update: 20
+  epsilon_start: 1.0
+  epsilon_end: 0.05
+  epsilon_decay: 0.985
+  action_effect:
+    reduce:
+      HR: -0.15
+      TEMP: -0.08
+      FR: -0.1
+    maintain:
+      HR: 0.0
+      TEMP: 0.0
+      FR: 0.0
+    increase:
+      HR: 0.15
+      TEMP: 0.08
+      FR: 0.1
+  reward:
+    future_risk_weight: 1.0
+    uncertainty_weight: 0.25
+    action_change_penalty: 0.1
+    hr_quantiles:
+    - 0.25
+    - 0.75

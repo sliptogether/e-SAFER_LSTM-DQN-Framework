@@ -1,0 +1,22 @@
+{
+  "synthetic": true,
+  "seed": 2026,
+  "generator": "scripts/generate_synthetic_data.py",
+  "files": [
+    "Day1.xlsx",
+    "Day2.xlsx",
+    "Day3.xlsx",
+    "Day4.xlsx"
+  ],
+  "interval_seconds": 10,
+  "duration_seconds": 3300,
+  "features": [
+    "Na",
+    "K",
+    "Ca",
+    "TEMP",
+    "FR",
+    "HR"
+  ],
+  "warning": "Entirely synthetic analytic signals. Not participant data, paper results, or a validated physiological simulation."
+}
